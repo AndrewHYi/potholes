@@ -2,19 +2,14 @@
 
 # == Schema Information
 #
-# Table name: dummies
+# Table name: integration_issues
 #
 #  id         :integer          not null, primary key
-#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 require "rails_helper"
 
-RSpec.describe Dummy, type: :model do
-  it "works" do
-    described_class.create
-
-    expect(described_class.count).to eq(1)
-  end
+RSpec.describe IntegrationIssue, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

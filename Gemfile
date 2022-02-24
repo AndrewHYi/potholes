@@ -24,6 +24,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "annotate"
   gem "listen", "~> 3.3"
   gem "rspec-rails"
   gem "rubocop"
