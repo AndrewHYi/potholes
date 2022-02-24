@@ -1,0 +1,152 @@
+# Hound uses Rubocop's defaults with a small override file.
+# Look at Hound's Gemfile.lock to find current version of Rubocop: 0.34.2
+# Look at Rubocop's config directory for details: rubocop/config
+# Start with Hound's overrides and then add our own.
+inherit_from: .ruby-style-base.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+# Hound does not support configuration files in subdirectories.
+# The following options are used for all files.
+
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  NewCops: enable
+  SuggestExtensions: false
+
+Layout/HashAlignment:
+  Description: Align the elements of a hash literal if they span more than one line.
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+
+Layout/LineLength:
+  Description: Limit lines to 120 characters.
+  Enabled: true
+  Exclude:
+    - spec/**/*
+    - config/routes.rb
+  Max: 120
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+  EnforcedStyle: no_space
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - config/routes.rb
+
+Style/AsciiComments:
+  Enabled: false
+
+# This implements the Weirich semantics for {} vs do/end
+# See the base file for details on how to teach the cop
+# about appropriate semantic interpretation based on method names.
+Style/BlockDelimiters:
+  AllowBracesOnProceduralOneLiners: true
+  EnforcedStyle: semantic
+  Exclude:
+    - spec/factories/*
+  FunctionalMethods:
+      # Methods that are known to be functional in nature but look procedural from
+      # their usage, e.g.
+      #
+      #   let(:foo) { Foo.new }
+      #
+      # Here, the return value of `Foo.new` is used to define a `foo` helper but
+      # doesn't appear to be used from the return value of `let`.
+      - detect
+      - let
+      - let!
+      - sequence
+      - subject
+      - watch
+      # rails respond_to format blocks
+      - geojson
+      - html
+      - json
+      - mobile
+      - xml
+  ProceduralMethods:
+    - submit_request
+
+Style/Documentation:
+  Enabled: false
+
+Style/Lambda:
+  Description: Use the new lambda literal syntax for single-line blocks.
+  Enabled: false
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#lambda-multi-line
+
+Style/MutableConstant:
+  Description: Do not assign mutable objects to constants.
+  Enabled: true
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/Send:
+  Description: Prefer `Object#__send__` or `Object#public_send` to `send`, as `send` may overlap with existing methods.
+  Enabled: true
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringMethods:
+  Enabled: true
+
+Style/SymbolArray:
+  Exclude:
+    - config/routes.rb
+    - db/migrate/*.rb
+  MinSize: 5
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/WordArray:
+  MinSize: 3
+
+Rails/FilePath:
+  Enabled: true
+  EnforcedStyle: arguments
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: true
+  Exclude:
+    - db/migrate/*.rb
+    - spec/**/*.rb
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
+
+RSpec/LetSetup:
+  Enabled: false
