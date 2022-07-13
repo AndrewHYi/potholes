@@ -11,7 +11,6 @@
 1. `rake db:schema:load`
 
 ## Sanity Checks for Project Setup:
-1. Make sure `bundle exec rspec spec` passes
 1. Make sure `bin/rails s` starts the rails server on port 3000
 1. Visit `http://localhost:3000/sanity_check` and ensure that the page loads.
 
